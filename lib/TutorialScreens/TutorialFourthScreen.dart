@@ -28,7 +28,9 @@ class TutorialFourthScreen extends StatelessWidget {
             SizedBox(
               height: kTopPadding + 30,
             ),
-            Image.asset('assets/images/img.png'),
+            Expanded(
+              child: Image.asset('assets/images/img.png'),
+            ),
           ],
         ),
       ),

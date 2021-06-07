@@ -36,7 +36,7 @@ class ToDoManager {
   }
 
   /* Delete task from Firebase */
-  void deteletTaskFromFirebase(String documentID) async {
+  void deleteTaskFromFirebase(String documentID) async {
     await FirebaseFirestore.instance
         .collection(kFirebaseCollectionDataKey)
         .doc(documentID)

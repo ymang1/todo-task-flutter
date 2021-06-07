@@ -45,7 +45,9 @@ class TutorialFifthScreen extends StatelessWidget {
               SizedBox(
                 height: kTopPadding + 40,
               ),
-              Image.asset('assets/images/img.png'),
+              Expanded(
+                child: Image.asset('assets/images/img.png'),
+              ),
             ],
           ),
         ),

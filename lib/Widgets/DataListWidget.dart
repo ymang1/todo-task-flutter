@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_task/Manager/ToDoManager.dart';
@@ -50,41 +49,45 @@ class DataListWidget extends StatelessWidget {
                 items.insert(newIndex, item);
               },
               itemBuilder: (context, index) {
-                return Dismissible(
-                  direction: items[index].completed
-                      ? DismissDirection.endToStart
-                      : DismissDirection.horizontal,
-                  background: SwipeWidget(
-                    icon: Icons.check,
-                    padding: EdgeInsets.only(left: 15),
-                    alignment: AlignmentDirectional.centerStart,
-                    backgroundColor: Colors.green,
-                  ),
-                  secondaryBackground: SwipeWidget(
-                      icon: Icons.close,
-                      iconColor: Colors.red,
-                      padding: EdgeInsets.only(right: 15),
-                      alignment: AlignmentDirectional.centerEnd),
-                  key: Key(items[index].task),
-                  confirmDismiss: (direction) async {
-                    if (direction == DismissDirection.startToEnd &&
-                        items[index].completed == false) {
-                      toDoManager.updateTaskInFirebase(
-                          items[index].documentId, items[index].task, true);
-                    } else if (direction == DismissDirection.endToStart) {
-                      toDoManager
-                          .deteletTaskFromFirebase(items[index].documentId);
-                    }
-                  },
-                  child: ListTileWidget(
-                    title: items[index].task,
-                    cellHeight: kListCellHeight,
-                    cellBGColor: colorShades[index % colorShades.length],
-                    isCompleted: items[index].completed,
-                  ),
-                );
+                return getDismissibleWidget(items, index);
               });
         },
+      ),
+    );
+  }
+
+  Dismissible getDismissibleWidget(List<Task> items, int index) {
+    return Dismissible(
+      direction: items[index].completed
+          ? DismissDirection.endToStart
+          : DismissDirection.horizontal,
+      background: SwipeWidget(
+        icon: Icons.check,
+        padding: EdgeInsets.only(left: 15),
+        alignment: AlignmentDirectional.centerStart,
+        backgroundColor: Colors.green,
+      ),
+      secondaryBackground: SwipeWidget(
+          icon: Icons.close,
+          iconColor: Colors.red,
+          padding: EdgeInsets.only(right: 15),
+          alignment: AlignmentDirectional.centerEnd),
+      key: Key(items[index].task),
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.startToEnd &&
+            items[index].completed == false) {
+          toDoManager.updateTaskInFirebase(
+              items[index].documentId, items[index].task, true);
+        } else if (direction == DismissDirection.endToStart) {
+          toDoManager
+              .deleteTaskFromFirebase(items[index].documentId);
+        }
+      },
+      child: ListTileWidget(
+        title: items[index].task,
+        cellHeight: kListCellHeight,
+        cellBGColor: colorShades[index % colorShades.length],
+        isCompleted: items[index].completed,
       ),
     );
   }

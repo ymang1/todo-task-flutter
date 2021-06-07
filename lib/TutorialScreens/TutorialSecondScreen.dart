@@ -32,7 +32,9 @@ class TutorialSecondScreen extends StatelessWidget {
             SizedBox(
               height: kTopPadding + 20,
             ),
-            Image.asset('assets/images/img.png'),
+            Expanded(
+              child: Image.asset('assets/images/img.png'),
+            ),
           ],
         ),
       ),
